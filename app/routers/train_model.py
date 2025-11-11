@@ -2,9 +2,9 @@ from fastapi import APIRouter, HTTPException
 from app.schemas.schemas import TrainRequest, TrainResponse
 from app.services.train_model import train
 
-router = APIRouter(prefix="/train", tags=["Training"])
+router = APIRouter()
 
-@router.post("/", response_model=TrainResponse)
+@router.post("/train")
 async def train_model(request: TrainRequest):
     """
     Train a Logistic Regression model and save it in a timestamped folder.

@@ -2,9 +2,9 @@ from fastapi import APIRouter, HTTPException
 from app.schemas.schemas import PredictRequest, PredictResponse
 from app.services.predict import predict_datapoint
 
-router = APIRouter(prefix="/predict", tags=["Prediction"])
+router = APIRouter()
 
-@router.post("/", response_model=PredictResponse)
+@router.post("/predict")
 async def predict(request: PredictRequest):
     """
     Predict diabetes likelihood for a single ICU datapoint.
