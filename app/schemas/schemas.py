@@ -3,6 +3,7 @@ from pydantic import BaseModel
 # ============================================================
 # 🧠 PREDICTION SCHEMAS
 # ============================================================
+# Schemas of predict endpoint
 
 class PredictRequest(BaseModel):
     age: float
@@ -28,6 +29,7 @@ class PredictResponse(BaseModel):
 # ============================================================
 # 🧩 TRAINING SCHEMAS
 # ============================================================
+#Schemas of train_model endpoint
 
 class TrainRequest(BaseModel):
     penalty: str = "l2"

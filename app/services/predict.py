@@ -34,6 +34,16 @@ async def predict_datapoint(
     model = joblib.load(model_path)
 
     # 3️⃣ Prepare input dataframe — same columns used in training
+    # Read the model
+    model_path = "app/logistic_regression_model.pkl"
+
+    # Load pipeline (includes preprocessing + model)
+    model = joblib.load(model_path)
+
+    if not model:
+        raise FileNotFoundError("No trained model loaded.")
+
+    # Prepare input dataframe — same columns used in training
     X_new = pd.DataFrame([{
         "age": age,
         "bmi": bmi,
@@ -53,8 +63,14 @@ async def predict_datapoint(
     y_pred_class = int(model.predict(X_new)[0])
 
     # 5️⃣ Return structured response
+    # Predict probability and class
+    y_pred_prob = float(model.predict_proba(X_new)[0, 1])
+    y_pred_class = int(model.predict(X_new)[0])
+
+    # Return structured response
     return PredictResponse(
         model_used=str(model_path),
         probability_diabetes=y_pred_prob,
         predicted_class=y_pred_class
+    )
     )
