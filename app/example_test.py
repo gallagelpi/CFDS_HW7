@@ -14,8 +14,6 @@ def get_prediction(data):
         # Send the POST at the endpoint
         response = requests.post(API_URL, json=data, timeout=10)
         response.raise_for_status()  
-
-        # Parseamos JSON de la respuesta
         result = response.json()
         print("Prediction result:")
         print(json.dumps(result, indent=2))
