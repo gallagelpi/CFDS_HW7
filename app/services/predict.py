@@ -18,22 +18,10 @@ async def predict_datapoint(
     ethnicity: str
 ) -> PredictResponse:
     """
-    Loads the most recent trained Logistic Regression pipeline and
+    Loads the trained Logistic Regression pipeline and
     predicts diabetes probability for a single ICU datapoint.
     """
 
-    # Find latest model
-    models_dir = Path("../models")
-    if not models_dir.exists() or not any(models_dir.iterdir()):
-        raise FileNotFoundError("No trained models found in ../models directory.")
-
-    latest_folder = max(models_dir.iterdir(), key=lambda f: f.stat().st_mtime)
-    model_path = latest_folder / "logistic_regression_model.pkl"
-
-    # Load pipeline (includes preprocessing + model)
-    model = joblib.load(model_path)
-
-    # Prepare input dataframe — same columns used in training
     # Read the model
     model_path = "app/logistic_regression_model.pkl"
 
@@ -58,11 +46,6 @@ async def predict_datapoint(
         "ethnicity": ethnicity
     }])
 
-    # Predict probability and class
-    y_pred_prob = float(model.predict_proba(X_new)[0, 1])
-    y_pred_class = int(model.predict(X_new)[0])
-
-    # Return structured response
     # Predict probability and class
     y_pred_prob = float(model.predict_proba(X_new)[0, 1])
     y_pred_class = int(model.predict(X_new)[0])

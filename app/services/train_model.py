@@ -12,8 +12,7 @@ from app.schemas.schemas import TrainResponse
 
 async def train(penalty: str, max_iter: int) -> TrainResponse:
     """
-    Trains a Logistic Regression model using the ICU dataset and saves
-    it into a timestamped folder inside ../models.
+    Trains a Logistic Regression model using the ICU dataset and saves it
     """
 
     # Validate parameters
@@ -68,13 +67,8 @@ async def train(penalty: str, max_iter: int) -> TrainResponse:
     # Fit model
     model.fit(X, y)
 
-    # Create timestamped folder
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    folder_path = Path(f"models/{timestamp}")
-    folder_path.mkdir(parents=True, exist_ok=True)
-
     # Save pipeline
-    model_path = folder_path / "logistic_regression_model.pkl"
+    model_path = "app/logistic_regression_model.pkl"
     joblib.dump(model, model_path)
 
     # Return structured response

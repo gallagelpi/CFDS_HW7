@@ -10,8 +10,7 @@ async def train_model(request: TrainRequest):
     Train a Logistic Regression model and save it in a timestamped folder.
     """
     try:
-        result = await train(request.penalty, request.max_iter)
-        return result
+        return await train(request.penalty, request.max_iter)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
